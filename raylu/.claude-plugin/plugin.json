@@ -1,0 +1,10 @@
+{
+  "name": "raylu",
+  "version": "0.1.0",
+  "description": "Company intelligence, market mapping, sourcing, and outreach workflows powered by the Raylu MCP server.",
+  "author": {
+    "name": "Raylu",
+    "url": "https://raylu.ai"
+  },
+  "homepage": "https://app.raylu.ai/docs/mcp"
+}
