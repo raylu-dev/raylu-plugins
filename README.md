@@ -14,14 +14,14 @@ The marketplace hosts one plugin, **Raylu**, which bundles:
 
 1. Open **Customize** (left sidebar) → **Plugins**.
 2. Under **Personal plugins**, click **+** → **Add marketplace**.
-3. Enter this repository: `nikhilraylu/raylu-plugins`.
+3. Enter this repository: `raylu-dev/raylu-plugins`.
 4. Install the **Raylu** plugin.
 5. The first time a Raylu skill runs, complete the OAuth login to your Raylu account.
 
 ### Claude Code
 
 ```bash
-/plugin marketplace add nikhilraylu/raylu-plugins
+/plugin marketplace add raylu-dev/raylu-plugins
 /plugin install raylu@raylu
 ```
 
