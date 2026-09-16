@@ -4,7 +4,7 @@ This plugin bundles a single connector: the **Raylu MCP server**.
 
 | Connector | Type | URL | Auth |
 |-----------|------|-----|------|
-| `raylu` | Remote HTTP MCP | `https://mcp.raylu.ai` | OAuth (WorkOS) on first use |
+| `raylu` | Remote HTTP MCP | `https://mcp.raylu.ai/mcp` | OAuth (WorkOS) on first use |
 
 When you install the Raylu plugin, the MCP server is registered automatically (see [`.mcp.json`](.mcp.json)). The first time a skill calls a Raylu tool, you'll be prompted to log in to your Raylu account via OAuth. After that, the connection persists.
 
