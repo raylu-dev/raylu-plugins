@@ -17,7 +17,7 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 
 ## Connection
 
-The plugin registers the Raylu MCP server (`https://mcp.raylu.ai`) automatically — see [CONNECTORS.md](CONNECTORS.md). You'll complete an OAuth login the first time a Raylu tool runs.
+The plugin registers the Raylu MCP server (`https://mcp.raylu.ai/mcp`) automatically — see [CONNECTORS.md](CONNECTORS.md). You'll complete an OAuth login the first time a Raylu tool runs.
 
 ## Editing the workflows
 

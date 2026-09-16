@@ -2,7 +2,7 @@
   "mcpServers": {
     "raylu": {
       "type": "http",
-      "url": "https://mcp.raylu.ai"
+      "url": "https://mcp.raylu.ai/mcp"
     }
   }
 }

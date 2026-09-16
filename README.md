@@ -6,7 +6,7 @@ The marketplace hosts one plugin, **Raylu**, which bundles:
 
 - **7 workflow skills** that walk Claude through high-leverage Raylu tasks end to end.
 - **A `start` skill** to get oriented and confirm the connection.
-- **The Raylu MCP connection** (`https://mcp.raylu.ai`), wired up on install — you just log in via OAuth the first time a tool runs.
+- **The Raylu MCP connection** (`https://mcp.raylu.ai/mcp`), wired up on install — you just log in via OAuth the first time a tool runs.
 
 ## Install
 
