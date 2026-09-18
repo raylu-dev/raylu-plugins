@@ -12,6 +12,7 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 - **sourcing** — set up a recurring sourcing routine.
 - **ma-mapping** — build a scored M&A map anchored on a target.
 - **outreach** — build and launch a multi-touch outreach sequence.
+- **cadence-setup** — port an existing email sequence (Outreach, Apollo, SalesLoft, HubSpot, a doc) into a Raylu cadence, word for word.
 - **meeting-prep** — auto-prep intro calls from your calendar.
 - **convert-skill** — convert a custom skill/prompt into a Raylu workflow.
 
