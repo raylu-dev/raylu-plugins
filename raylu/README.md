@@ -13,6 +13,8 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 - **ma-mapping** — build a scored M&A map anchored on a target.
 - **outreach** — build and launch a multi-touch outreach sequence.
 - **meeting-prep** — auto-prep intro calls from your calendar.
+- **conference-screen**: who to meet at a conference, and what to talk about.
+- **conference-finder**: which conferences to attend, from your companies, a sector, or your top-scored targets.
 - **convert-skill** — convert a custom skill/prompt into a Raylu workflow.
 
 ## Connection
