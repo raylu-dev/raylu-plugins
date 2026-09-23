@@ -36,7 +36,7 @@ Ask one question per message. Never bundle questions. If the user already answer
 | Timing given as "wait N days" | Use N directly |
 | Timing that could be read either way ("after 9 days", "+9 days", "9 days later") with nothing in the source fixing the anchor | Ask, naming the step: "Step 3 says 'after 9 days'. Is that 9 days after step 2, or 9 days after the first email?" Ask only when it is unclear: a source that says "Day N" throughout, says "wait N days", has an explicit gap or interval column, or spells out the anchor once ("all timings from send") needs no question |
 | Follow-ups reply in thread, or thread behavior unstated | `cadenceMode: "RESPOND_IN_THREAD"`, the first email's subject copied onto every email step (including steps with no subject), no "Re:" prefix. Raylu takes the thread subject from the first step, so a different subject on a later step would be discarded |
-| Every step opens a new thread | `cadenceMode: "SEPARATE_EMAIL"`, each subject kept as written |
+| Every step opens a new thread | `cadenceMode: "SEPARATE_EMAIL"`, each subject kept as written. Every email step needs its own subject in this mode. Where the source has none (a reply-style follow-up), ask for one, naming the step. Never pass an empty subject: Raylu would send that step under the project's default subject, or "Opportunity to Partner with [Company Name]" |
 | Mixed: some replies, some new threads (signals: "Re:" subjects, "my note below", "bumping this" versus a different subject, "Fresh thread", "new thread") | Raylu sets threading once per cadence. Ask, filling in the real step numbers and phrases: "Step 4 replies in the thread but step 5 starts a new one. Raylu can only do one or the other for the whole cadence. Reply-in-thread keeps the follow-ups attached but drops step 5's subject line; separate emails keep every subject but step 4's 'my note below' will have nothing below it. Which do you want?" Recommend reply-in-thread unless the source has an explicit thread-break subject, in which case present both neutrally. Then name any step whose premise no longer holds under the choice and ask in the same message whether they want to give new copy for that step or keep it as is |
 | First name: `{{first_name}}`, `{{contact.first_name}}`, `{{person.first_name}}`, `{{prospect.first_name}}`, `{{lead.first_name}}` | `[First Name]` |
 | Company: `{{company}}`, `{{company_name}}`, `{{account.name}}`, `{{prospect.company}}`, `{{organization}}` | `[Company Name]` |
@@ -52,7 +52,7 @@ Ask one question per message. Never bundle questions. If the user already answer
 | Call or task step | `type: "phone"` when the content is a call, whatever the source's label; otherwise `"task"`. Give it a `description`. `[First Name]` and `[Company Name]` are fine in the description; there is no phone or email variable, so write "see the contact record" in place of `{{phone}}` |
 | Follow-ups described but not written ("follow up twice, a week apart") | Ask for the follow-up copy. If they say "just write short bumps", write two-sentence bumps in the same thread that reuse their own words and say nothing new |
 | Send window, timezone, weekdays in the source | Do not set `config` on create. Offer them in step 8, prefilled from the source |
-| HTML | Strip tags, keep paragraph and line breaks |
+| HTML | Strip tags, keep paragraph and line breaks. Hyperlinks are the exception: replace each anchor with `[Link N]` (numbered 1, 2, 3 within the step) and pass it in that step's `linkConfigs` as `{"N": {"text": "<link text>", "url": "<href>"}}`. Raylu turns `[Link N]` into a real link at send time and has no other way to send one. If a link's destination is not in the source (a merge field or a tracked redirect), ask for it |
 
 Never convert an unsupported merge field into an AI prompt or a `[personalization N]` block on your own. The user asked for their sequence, not a rewrite.
 
@@ -75,5 +75,7 @@ Send this after `create_cadence` succeeds and any edits are applied. Fill every 
 - Turning an unsupported merge field into an AI block on your own. Ask, then remove or replace with fixed text.
 - Ignoring an explicit request for AI personalization. Add one block on its own line and confirm it.
 - Adding "Re:" to follow-up subjects. Raylu handles threading.
+- Stripping a hyperlink to plain text. Links only send through `[Link N]` plus `linkConfigs`.
+- Passing an empty subject on a separate-email step. Ask for one instead.
 - Confirming a name before checking it exists.
 - Reporting success on a failed tool call. Read the response before the closing message.
