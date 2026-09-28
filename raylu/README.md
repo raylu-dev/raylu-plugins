@@ -14,6 +14,8 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 - **outreach** — build and launch a multi-touch outreach sequence.
 - **cadence-setup** — port an existing email sequence (Outreach, Apollo, SalesLoft, HubSpot, a doc) into a Raylu cadence, word for word.
 - **meeting-prep** — auto-prep intro calls from your calendar.
+- **conference-screen**: who to meet at a conference, and what to talk about.
+- **conference-finder**: which conferences to attend, from your companies, a sector, or your top-scored targets.
 - **convert-skill** — convert a custom skill/prompt into a Raylu workflow.
 
 ## Connection
