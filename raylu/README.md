@@ -9,6 +9,7 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 - **start** — get oriented and confirm the Raylu connection.
 - **companies** — company lookup, firmographic search, investor portfolios, team analysis, meeting prep.
 - **market-intelligence** — analyze a market map; add AI enrichment columns.
+- **market-map-updates** — rerun market maps, report newly added companies with deal scores and standouts, optionally email the results and label companies with a "Date added" field.
 - **sourcing** — set up a recurring sourcing routine.
 - **ma-mapping** — build a scored M&A map anchored on a target.
 - **outreach** — build and launch a multi-touch outreach sequence.

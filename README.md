@@ -31,6 +31,7 @@ The marketplace hosts one plugin, **Raylu**, which bundles:
 |-------|--------------|
 | Companies | Company lookup, firmographic search, investor portfolios, team analysis, meeting prep |
 | Market Intelligence | Analyze a market map; add AI enrichment columns |
+| Market Map Updates | Rerun market maps, report new companies with deal scores and standouts, optionally email results |
 | Sourcing | Stand up a recurring, automated sourcing routine |
 | M&A Mapping | Build a scored M&A map anchored on an acquisition target |
 | Outreach | Build and launch a multi-touch outreach sequence |
