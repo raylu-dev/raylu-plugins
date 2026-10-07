@@ -39,7 +39,7 @@ For each step in the source skill, identify which Raylu MCP tools can replace or
 - `start_market_map`, `update_market_map`, `get_market_map`, `get_market_map_data`, `list_market_maps`
 - `create_ai_enrich_column`, `enrich_market_map` — add and run AI enrichment columns
 - `create_ma_map` — build an M&A-anchored map in one operation
-- `add_company_to_market_map`
+- `add_companies_to_market_map`
 
 **Lists**
 - `create_list`, `get_list`, `list_lists`, `add_company_to_list`
