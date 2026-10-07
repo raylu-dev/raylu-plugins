@@ -11,7 +11,7 @@ When you install the Raylu plugin, the MCP server is registered automatically (s
 The Raylu tools these skills rely on include:
 
 - **Company data & search** — `search_companies`, `get_company`, `get_companies`, `firmographic_search`, `company_people_search`, `company_team_breakdown`
-- **Market maps** — `start_market_map`, `update_market_map`, `get_market_map`, `get_market_map_data`, `create_ai_enrich_column`, `enrich_market_map`, `create_ma_map`, `setup_ma_mapping`
+- **Lists and market maps** — `search_lists_and_maps`, `get_list_or_map`, `get_list_or_map_rows`, `create_list`, `add_companies_to_list_or_map`, `start_market_map`, `update_market_map`, `create_ai_enrich_column`, `enrich_list_or_map`, `create_ma_map`, `setup_ma_mapping`
 - **Scoring** — `list_scoring_definitions`, `score_companies`
 - **Outreach** — `find_company_contact`, `list_strategies`, `create_strategy`, `generate_campaign`, `start_campaign`
 - **Meeting prep** — `meeting_prep_brief`

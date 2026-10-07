@@ -11,8 +11,8 @@ Raylu market maps contain structured data on hundreds to thousands of companies 
 
 ## Part A: Pick or Build a Market Map
 
-1. Call list_market_maps to see what's available
-2. If one matches, call get_market_map to see its columns
+1. Call search_lists_and_maps to see what's available
+2. If one matches, call get_list_or_map to see its columns
 3. If none fit, use start_market_map / update_market_map to build one
 
 ## Part B: Suggest Macro Analyses
@@ -32,7 +32,7 @@ Propose analyses based on available columns:
 ### How to run an analysis
 
 1. Identify columns needed (2-5 max)
-2. Call get_market_map_data with those specific columns — NEVER pull all columns
+2. Call get_list_or_map_rows with those specific columns — NEVER pull all columns
 3. Compute statistics yourself from the raw data
 4. Present with counts, percentages, top/bottom lists
 5. Ask: "What else would you like to explore?"
@@ -43,8 +43,8 @@ When the user wants intelligence that doesn't exist in current columns:
 
 1. Write an enrichment prompt (direct instruction, specific, with output format)
 2. Call create_ai_enrich_column with the prompt
-3. Call enrich_market_map to trigger enrichment
-4. Wait 1-5 minutes, then pull data via get_market_map_data
+3. Call enrich_list_or_map to trigger enrichment
+4. Wait 1-5 minutes, then pull data via get_list_or_map_rows
 
 ### Output types
 - enum: Categorizing into buckets (MUST provide options array)

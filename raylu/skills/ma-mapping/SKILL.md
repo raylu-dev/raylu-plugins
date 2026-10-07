@@ -36,10 +36,10 @@ Call create_ma_map with:
 - firmographics from Step C as natural language (e.g., "less than 250 employees", "Series A or earlier")
 - enrichColumns for non-structural criteria (e.g., "Target Customer Segment", "GTM Motion", "Product Overlap with [Target]")
 
-This creates the map, populates companies, scores them, creates AI columns, and runs enrichment — all in one operation. Use get_market_map_data to check results when enrichment completes.
+This creates the map, populates companies, scores them, creates AI columns, and runs enrichment — all in one operation. Use get_list_or_map_rows to check results when enrichment completes.
 
 ## Step E: Filter and Present Results
-Pull get_market_map_data with all relevant columns including AI enriched ones.
+Pull get_list_or_map_rows with all relevant columns including AI enriched ones.
 Filter to companies matching ALL acquirability criteria.
 Present in a table:
 | Company | Domain | Headcount | Location | Funding | Customer Segment | GTM | Product Overlap | Acquirability Notes |
