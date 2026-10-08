@@ -39,7 +39,7 @@ Call create_ma_map with:
 This creates the map, populates companies, scores them, creates AI columns, and runs enrichment — all in one operation. Use get_list_or_map_rows to check results when enrichment completes.
 
 ## Step E: Filter and Present Results
-Pull get_list_or_map_rows with all relevant columns including AI enriched ones.
+Pull get_list_or_map_rows with all relevant columns including AI enriched ones. Rows come one page at a time, so read every page before counting, filtering, or deduping.
 Filter to companies matching ALL acquirability criteria.
 Present in a table:
 | Company | Domain | Headcount | Location | Funding | Customer Segment | GTM | Product Overlap | Acquirability Notes |

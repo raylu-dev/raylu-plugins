@@ -32,7 +32,7 @@ Propose analyses based on available columns:
 ### How to run an analysis
 
 1. Identify columns needed (2-5 max)
-2. Call get_list_or_map_rows with those specific columns — NEVER pull all columns
+2. Call get_list_or_map_rows with those specific columns — NEVER pull all columns. Rows come one page at a time, so read every page before counting, filtering, or deduping.
 3. Compute statistics yourself from the raw data
 4. Present with counts, percentages, top/bottom lists
 5. Ask: "What else would you like to explore?"

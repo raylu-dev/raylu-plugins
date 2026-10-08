@@ -38,7 +38,7 @@ After collecting all choices, help the user create a scheduled task with the fil
 ## Pipeline Template (fill in from steps above)
 The recurring run should:
 1. RESEARCH — search web for NEWS ARTICLES in the last [period] about [category]. Extract company names + what happened + source URL. Present findings before proceeding.
-2. DISCOVER — run firmographic_search with the user's filters. If an existing map, also pull get_list_or_map_rows with score/isInCRM/hasOutreachCampaign columns.
+2. DISCOVER — run firmographic_search with the user's filters. If an existing map, also pull get_list_or_map_rows with score/isInCRM/hasOutreachCampaign columns. Rows come one page at a time, so read every page before counting, filtering, or deduping.
 3. FILTER — keep companies matching all criteria. Remove duplicates.
 4. PRESENT — show table with Company, Domain, Headcount, Location, Score, Funding, Why Source. Ask user to approve/skip each.
 5. EXECUTE — for approved: research_company, find_company_contact, generate_campaign with chosen strategy.
