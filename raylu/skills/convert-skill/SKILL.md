@@ -35,14 +35,12 @@ For each step in the source skill, identify which Raylu MCP tools can replace or
 **Firmographic search**
 - `firmographic_search` — structured search with filters: headcount, country, state, city, last_funding_stage, last_funding_amount, total_funding_amount, financing_status, founded_date, revenue, monthly_visits, industries, keywords, all_investors, all_funding_leads
 
-**Market maps**
-- `start_market_map`, `update_market_map`, `get_market_map`, `get_market_map_data`, `list_market_maps`
-- `create_ai_enrich_column`, `enrich_market_map` — add and run AI enrichment columns
+**Lists and market maps**
+- `search_lists_and_maps`, `get_list_or_map`, `get_list_or_map_rows`
+- `create_list`, `add_companies_to_list_or_map`
+- `start_market_map`, `update_market_map`
+- `create_ai_enrich_column`, `enrich_list_or_map` — add and run AI enrichment columns
 - `create_ma_map` — build an M&A-anchored map in one operation
-- `add_company_to_market_map`
-
-**Lists**
-- `create_list`, `get_list`, `list_lists`, `add_company_to_list`
 
 **Contacts & outreach**
 - `find_company_contact` — verified email + phone for the primary contact
@@ -73,7 +71,7 @@ Look beyond 1-to-1 replacement. Suggest improvements the original skill couldn't
 - Can an AI enrichment column automate something the user was doing manually per company?
 - Can `research_company` + `find_company_contact` + `generate_campaign` be chained instead of run separately?
 - Can a scheduled routine (`setup_sourcing_routine`) replace something the user runs ad-hoc?
-- Can a saved list (`create_list` + `add_company_to_list`) replace a spreadsheet?
+- Can a saved list (`create_list` + `add_companies_to_list_or_map`) replace a spreadsheet?
 
 Present the optimizations and ask the user which to apply. Do NOT silently change the skill's intent — flag every meaningful structural change before making it.
 
