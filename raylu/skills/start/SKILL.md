@@ -20,7 +20,7 @@ This plugin gives you ready-to-run workflows backed by Raylu's data and tools.
 
 ## Step 2: Check the Raylu connection
 
-Confirm the Raylu MCP server is connected by checking that Raylu tools are available (for example `search_companies`, `firmographic_search`, `get_market_map_data`, `meeting_prep_brief`).
+Confirm the Raylu MCP server is connected by checking that Raylu tools are available (for example `search_companies`, `firmographic_search`, `get_list_or_map_rows`, `meeting_prep_brief`).
 
 - If the tools are available, say: "Raylu is connected — you're ready to go."
 - If they are not, tell the user to install/enable the Raylu plugin and complete the OAuth login the first time a Raylu tool runs, then try again. Do not fake tool calls or answer company questions from general knowledge.
