@@ -4,7 +4,7 @@ A Claude plugin marketplace for [Raylu](https://raylu.ai). Adds Raylu's company 
 
 The marketplace hosts one plugin, **Raylu**, which bundles:
 
-- **8 workflow skills** that walk Claude through high-leverage Raylu tasks end to end.
+- **9 workflow skills** that walk Claude through high-leverage Raylu tasks end to end.
 - **A `start` skill** to get oriented and confirm the connection.
 - **The Raylu MCP connection** (`https://mcp.raylu.ai/mcp`), wired up on install — you just log in via OAuth the first time a tool runs.
 
@@ -35,6 +35,7 @@ The marketplace hosts one plugin, **Raylu**, which bundles:
 | M&A Mapping | Build a scored M&A map anchored on an acquisition target |
 | Outreach | Build and launch a multi-touch outreach sequence |
 | Cadence Setup | Port an email sequence you already use elsewhere into a Raylu cadence, word for word |
+| Sector Mapping | Break a sector into subsectors with company density, top companies, CRM coverage, and a focus recommendation |
 | Meeting Prep | Auto-prep intro calls from your calendar |
 | Convert Skill | Rewrite any custom skill/prompt as a Raylu workflow |
 

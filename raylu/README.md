@@ -13,6 +13,7 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 - **ma-mapping** — build a scored M&A map anchored on a target.
 - **outreach** — build and launch a multi-touch outreach sequence.
 - **cadence-setup** — port an existing email sequence (Outreach, Apollo, SalesLoft, HubSpot, a doc) into a Raylu cadence, word for word.
+- **sector-mapping** — break a sector into subsectors from a market map: company density, top companies, CRM coverage and recent touches per subsector, and where to focus; chat tables or a PDF.
 - **meeting-prep** — auto-prep intro calls from your calendar.
 - **convert-skill** — convert a custom skill/prompt into a Raylu workflow.
 
