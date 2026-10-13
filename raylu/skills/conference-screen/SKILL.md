@@ -17,7 +17,7 @@ Say at the start which of these the account lacks and what that changes.
 
 Walk through these steps ONE AT A TIME. Ask one question per message. Skip any question the user already answered.
 
-Prices in this skill (150 credits for a pull, 150 for a prep page, 5 for a save or a contact) are the skill's price list. The tools do not print charges, so say "by the skill's price list" and keep a running total for the run.
+Prices in this skill (150 credits for a pull, 5 for a prep page, a save or a contact, 25 for a CRM question, 1 for a scoring call) are Raylu's price list. The tools do not print charges, so say "by Raylu's price list" and keep a running total for the run.
 
 ## Step A: Which conference
 
@@ -43,7 +43,7 @@ Ask: "How many companies do you want back?" Default: the top 25.
 
 If a suitable completed pull exists: `conference_attendees(lookup_id: "<id>")` (free).
 
-If not, ask first: "Pulling the list is 150 credits by the skill's price list (the monthly allowance is 20,000 where one applies). It can take anywhere from a minute to 15 minutes with no estimate, and it adds every attendee to your Raylu project, including non-companies. Go ahead?" If the event is more than 4 months away, add that the list may reflect last year and suggest pulling closer to the date. Only on a yes: `conference_attendees(edition_id: "<id>", event_id: "<id>")`.
+If not, ask first: "Pulling the list is 150 credits by Raylu's price list (the monthly allowance is 20,000 where one applies). It can take anywhere from a minute to 15 minutes with no estimate, and it adds every attendee to your Raylu project, including non-companies. Go ahead?" If the event is more than 4 months away, add that the list may reflect last year and suggest pulling closer to the date. Only on a yes: `conference_attendees(edition_id: "<id>", event_id: "<id>")`.
 
 A pull usually outlasts the tool's wait. When the tool says the lookup is still running, keep the Lookup ID, wait 60 to 120 seconds, and call `conference_attendees(lookup_id)` again. A running lookup is not an empty result.
 
@@ -62,9 +62,9 @@ Tell the user how many attendees Raylu matched to companies and how many it coul
 
 ## Step D: Rank the list
 
-**With a deal score:** `score_companies(definition_id: "<id>", domains: [...])`. The tool accepts up to 1,000 domains per call; send at most 200 so nothing is skipped, 10 calls per 5 minutes. It returns a ranked table (rank, domain, score, label) and queues the companies with no score yet. Never call `get_run_status` for it.
+**With a deal score:** `score_companies(definition_id: "<id>", domains: [...])`. The tool accepts up to 1,000 domains per call; send at most 200 so nothing is skipped, 10 calls per 5 minutes, 1 credit per call. It returns a ranked table (rank, domain, score, label) and queues the companies with no score yet. Never call `get_run_status` for it.
 
-Wait a minute or two, then read the new scores with `get_score_breakdown(definition_id: "<id>", domains: [only the unscored ones])`. Do not call `score_companies` again to fetch results; that starts scoring over.
+Wait a minute or two, then call `score_companies` again with only the unscored domains. It returns the scores that have finished and queues only the companies still unscored; it does not score the others again. Do not use `get_score_breakdown` for this: it returns the full breakdown per company, far too much for an attendee list.
 
 A company with no score after that is "unscored", never zero. A domain the tool could not match to a company is "unresolved", and a "Disqualified" label or a negative score is a real result, not a missing one.
 
@@ -75,7 +75,7 @@ A company with no score after that is "unscored", never zero. A domain the tool 
 Walk down the ranking until you have enough companies, in two stages:
 
 1. The list's Team and Lists columns (free). These show that the company sits on one of the user's or a teammate's lists. That is "on a list of [name]'s", not ownership. A blank means nothing either way.
-2. Only if `crm_search` is available: `crm_search(question: "...")` with at most 40 domains per question and the question under 1,000 characters (25 credits per question by the skill's price list, 100-row cap, 10 questions per 5 minutes). If the tool says the CRM schema is still being profiled, that is not an empty CRM: retry after the wait it names. Ask for: owner, whether the owner is the connected user, last touch, last note date. For TA: the Salesforce account owner and `Date_of_Last_Touch__c`; tasks of type Email - Sent, Note, Interest, Pass Lead. Not in the CRM means unowned.
+2. Only if `crm_search` is available: `crm_search(question: "...")` with at most 40 domains per question and the question under 1,000 characters (25 credits per question by Raylu's price list, 100-row cap, 30 questions per 5 minutes). If the tool says the CRM schema is still being profiled, that is not an empty CRM: retry after the wait it names. Ask for: owner, whether the owner is the connected user, last touch, last note date. In Salesforce that is the account owner, the account's last-touch field, and tasks such as emails sent and notes. Not in the CRM means unowned.
 
 The tool prints the SQL it wrote and the row count. Show both, because an AI wrote the query and the user needs to catch a wrong or empty answer.
 
@@ -85,7 +85,7 @@ Without a CRM: there is no "coordinate first" table. Keep the top N, show the li
 
 ## Step F: Prep pages
 
-Write prep pages for the top 10 kept companies by default. Each `meeting_prep_brief(company: "<domain>")` is 150 credits by the skill's price list, so 25 pages is about a fifth of a month's budget. Ask before writing more than 10.
+Write prep pages for the top 10 kept companies by default. Each `meeting_prep_brief(company: "<domain>")` is 5 credits by Raylu's price list. Each page is long, so ask before writing more than 10.
 
 Call `meeting_prep_brief` one company at a time. It saves a company the project has not saved yet as a side effect; say so when that happens.
 
@@ -106,7 +106,7 @@ Call `meeting_prep_brief` one company at a time. It saves a company the project 
 
 **People:** run both `company_people_search(company: "<domain>", seniority: "Founder")` and `seniority: "C-Level"` (free, no emails), always both, because a co-founder CEO often appears only under C-Level. Merge the two, remove duplicates by LinkedIn link, and keep only real founder, co-founder, CEO, president and chief-officer titles. Drop "Founding Engineer", "Founding [any role]", "Founder in Residence" and "Chief of Staff". Give 1 to 2 people, CEO first. Zero people back means unknown, not none. The attendee list has no people or roles, so these are company executives, not confirmed attendees; say so.
 
-Emails only if the user wants them: `find_company_contact(query: "<domain>")`, 5 credits by the skill's price list, runs 1 to 3 minutes in the background; read the result with `get_company` afterwards. Flag any email whose domain is not the company's own.
+Emails only if the user wants them: `find_company_contact(query: "<domain>")`, 5 credits by Raylu's price list, runs 1 to 3 minutes in the background; read the result with `get_company` afterwards. Flag any email whose domain is not the company's own.
 
 ## Step G: Deliver
 
@@ -118,7 +118,7 @@ Use the output contract below. Then offer the result as CSV, an email draft, or 
 2. Ranked table of kept companies, top N: Company, Domain, Score, Owner status (you, unowned, the owner's name, or "unknown, no CRM"), Last touch, Why worth meeting (one clause from the score label, the CRM notes or the brief).
 3. "Coordinate first" (only with a CRM): companies owned by someone else, same columns, owner named.
 4. One prep page per kept company, top 10 by default: conference context, what they do, funding, headcount and its date, recent news, the user's CRM or Raylu history, suggested questions, 1 to 2 people worth talking to (title and why). Every fact comes from a tool result; say which (the brief, the company profile, the people search, or the web). News from the web is labelled as such. Anything else is under a "Claude's view" heading.
-5. Coverage line: pages read out of the total, companies removed and why, companies unscored, CRM questions asked and rows returned, prep pages written, credits spent by the skill's price list.
+5. Coverage line: pages read out of the total, companies removed and why, companies unscored, CRM questions asked and rows returned, prep pages written, credits spent by Raylu's price list.
 6. The export offer and the offer of more prep pages.
 
 A blank score, a blank owner or a blank last touch stays blank and is labelled unknown. Never fill a cell from memory. Never say or imply that a company attends because you expect it to; only the list says who attends.

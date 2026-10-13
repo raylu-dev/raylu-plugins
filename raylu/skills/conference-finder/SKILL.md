@@ -11,7 +11,7 @@ Needs the Raylu conference tools on the user's account. If `conference_search` i
 
 Ask one question per message. Skip any question the user already answered. The time window (next 6 months) and location (no limit) have defaults: use them without asking and state them in the output.
 
-Keep a running count of credits this run has spent (saves, pulls) and what each step will cost before it runs. The tools do not print charges, so label the figures "by the skill's price list".
+Keep a running count of credits this run has spent (saves, pulls) and what each step will cost before it runs. The tools do not print charges, so label the figures "by Raylu's price list".
 
 ## First question
 
@@ -33,7 +33,7 @@ Ask which companies (a few; about 20 is the working limit).
 4. `company_conferences(company: "<domain or ID>")` per company (free, 30 per minute). Three outcomes:
    - **A table of conferences.** Keep only editions that have not ended yet, by date; the tool does not mark past ones. Ignore the Industry column here, it uses older labels. The header may still say "never fetched" above real rows: that means partial (rows came from attendee pulls), so label it "partial".
    - **"Never fetched", no rows.** Not fetched yet, not "attends nothing". You cannot start the fetch: the user presses Refresh on that company's Conferences tab in the Raylu app.
-   - **"Not saved in this project".** This happens even for companies on the user's maps, lists and attendee pulls. Ask before saving: "`lookup_company` is 5 credits each by the skill's price list; N companies." After saving, repeat the tool's own words on what happened ("Added" or "already in your project"), since it does not state a charge. Saving alone rarely unlocks history: say up front that a saved company will most likely read "never fetched".
+   - **"Not saved in this project".** This happens even for companies on the user's maps, lists and attendee pulls. Ask before saving: "`lookup_company` is 5 credits each by Raylu's price list; N companies." After saving, repeat the tool's own words on what happened ("Added" or "already in your project"), since it does not state a charge. Saving alone rarely unlocks history: say up front that a saved company will most likely read "never fetched".
 5. After saving three or more companies, offer to put them in a named list so they are easy to find and Refresh in the app.
 6. For companies with no usable history, look on the web, and label every result "unverified, from the web":
    - Search "[company name] [domain] exhibitor OR speaker [year(s) in the window]". Use the years of the search window, never a fixed year.
@@ -41,14 +41,14 @@ Ask which companies (a few; about 20 is the working limit).
    - Better yield: find the likely events for the sector, open each one's published speaker, sponsor and exhibitor pages, and check them for the companies. A company missing from those pages may still attend as a delegate; say so.
 7. Build a grid of conferences by company, upcoming only, and rank conferences by how many of the companies attend. Default cut: 2 or more.
 8. Confirm the top 1 to 2: `conference_search(query: "<name>")` for the edition IDs, then `conference_lookups_list`, then `conference_attendees(lookup_id)` (free) if a list was already pulled. An exact website match in that list is the only firm confirmation. The list has no roles and no stated order, and cannot be searched: read every page (100 per page, 5 calls per 5 minutes) or say how many pages you read. Roles come only from the company's history.
-9. Do not start a new pull without asking. Say: "A pull is 150 credits by the skill's price list, can take several minutes with no estimate, and adds every attendee to your project, including non-companies." Never pull a copy of an edition that has no dates. If the catalogue shows 0 or blank exhibitors, warn that the pull may come back thin.
+9. Do not start a new pull without asking. Say: "A pull is 150 credits by Raylu's price list, can take several minutes with no estimate, and adds every attendee to your project, including non-companies." Never pull a copy of an edition that has no dates. If the catalogue shows 0 or blank exhibitors, warn that the pull may come back thin.
 
 ## Path B: sector, place and time
 
 Ask, one at a time: the sector or thesis in two sentences; the countries (a city is optional); the event type (conference, tradeshow or workshop, or any); the purpose (attend, sponsor or source).
 
 1. **Map the thesis onto the catalogue's sectors.** The `industries` filter takes these labels: healthcare & life sciences; education; professional services; industrials & manufacturing; software; consumer goods; financial services; media & entertainment; construction; transportation & logistics; energy & utilities; agriculture; food & beverage; government & public sector; environmental services; nonprofit & social sector; real estate; commercial & field services; retail & e-commerce; aerospace & defense; mining & natural resources; telecommunications; unclassified; Unknown. If the tool rejects a label it prints the current list: use that list, it is the source of truth. There is no sector for travel and tourism, and events are often misfiled, so the mapping is lossy. Show the mapping and ask the user to confirm it.
-2. **If no sector fits, or the sector search comes back off-topic, search by keyword instead and say that you did.** `query` matches literal words in titles, topics and organisers, so one wording is not enough: try the singular and plural, close synonyms ("SaaS" and "software"), and the acronyms of the trade bodies. An empty result means "no title matched those words", never "no such conference".
+2. **If no sector fits, or the sector search comes back off-topic, search by keyword instead and say that you did.** `query` matches only the conference name and its website, and every word must be in the name; topics, organisers and locations are not searched, whatever the tool description says. One wording is not enough: try the singular and plural, close synonyms ("SaaS" and "software"), and the acronyms of the trade bodies. An empty result means "no name matched those words", never "no such conference".
 3. `conference_search` with `industries`, `countries` (two-letter codes), date_from and date_to, and event_type if given. `query` can be combined with any filter. Results come 25 per page and the response states the total.
 4. **Read the total first.** If it is over about 100, narrow before paging (a sub-topic keyword, one country, an event type, a shorter window) or ask the user which. Read at most 5 pages and tell the user "read X of Y".
 5. **Clean the results, and say how many you removed of each kind:**
@@ -70,7 +70,7 @@ Ask which lists or market maps (one or several), then how many top companies (de
 
 1. Resolve names with `search_lists_and_maps(search: "...")`; it labels each match List, CRM list, or Market map.
 2. **Deal score.** `list_scoring_definitions`. If there are several, the user chooses, never you. If there is exactly one, name it and ask to confirm. If there are none, say so and offer: rank by the market map's own score column (say that it is the map's score and that its source is not named), or have the user name the companies.
-3. **Maps:** `get_run_status(feature: "market_map", query: "<map>")` first, so you do not read a map mid-build; then `get_list_or_map_rows(map: "<map>", columns: ["name", "domain", "score"])`. There is no server-side sort, so ask for those three columns only and sort yourself, and ask for the next `page` while the first line says more remain.
+3. **Maps:** `get_list_or_map_rows(map: "<map>", columns: ["name", "domain", "score"])`. If the map is still building, the reply says so above the rows; tell the user the scores are not final. There is no server-side sort, so ask for those three columns only and sort yourself. Pages hold up to 500 rows: while the count line reads "page X of Y" with X below Y, ask for the next `page`.
 4. **Lists:** `get_list_or_map_rows(list: "<list>", columns: ["name", "domain"], page: n)` for names and domains, reading every page. If the list cannot be found, check with `search_lists_and_maps` that the connector is on the project that holds it before telling the user it is missing; a connector pointed at another project gives exactly this error. With a deal score: `score_companies(definition_id, domains: [...])`, at most 200 per call.
 5. **Taking the top N.** Leave out negative scores and "Disqualified" and say how many. If the cut falls inside a group of tied scores, take the whole tied group when that is 30 companies or fewer; otherwise ask the user how to narrow it. Scores from different deal scores or different maps are not comparable: with several maps, take the top few per map, never one sorted list.
 6. Continue with Path A steps 2 to 9. Do not assume list and map members are saved; many read "not saved in this project".
@@ -93,7 +93,7 @@ Everything in the tables comes from a Raylu tool result, except rows labelled un
 
 ## Limits to state plainly
 
-- The catalogue filters by sector and country only, has no travel sector, and misfiles events. Keyword search matches literal words.
+- The catalogue filters by sector and country only, has no travel sector, and misfiles events. Keyword search matches words in conference names and websites only.
 - A history that was never fetched means "not fetched yet", never "attends nothing". Matching is by exact website, so brands, parent companies and regional sites are missed. History is a shared cache across Raylu.
 - Confirmed attendance exists only 3 to 4 months out. Further out is predicted from prior years and must be labelled as such.
 - Size figures are catalogue estimates and are sometimes wrong.
