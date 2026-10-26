@@ -17,7 +17,7 @@ Say at the start which of these the account lacks and what that changes.
 
 Walk through these steps ONE AT A TIME. Ask one question per message. Skip any question the user already answered.
 
-Catalogue and company-attendance reads do not start provider work or save a company. Starting an attendee lookup saves a personal lookup. Starting, refreshing, retrying, and submitting can start provider work and add resolved attendees to the project as companies. Submission also saves a personal conference. Reading an attendee page can add its returned companies to the project without starting a crawl. State these effects, but do not quote fixed prices or completion times that the tool has not supplied. A user request to retrieve attendees authorizes that retrieval.
+Catalogue and company-attendance reads do not start a refresh or save a company. Starting an attendee lookup saves a personal lookup. Starting, refreshing, retrying, and submitting can update attendance and add matched attendees to the project as companies. Submission also saves a personal conference. Reading an attendee page can add its returned companies to the project without starting a refresh. State these effects, but do not quote fixed prices or completion times that the tool has not supplied. A user request to retrieve attendees authorizes that retrieval.
 
 ## Step A: Which conference
 
@@ -31,7 +31,7 @@ Then use operation `saved` to find existing lookups. Match the exact event and e
 - the event is already over;
 - the pull was made more than about 4 months before the event (it may reflect last year's exhibitors);
 - the pull is more than a few weeks old and the event is close (offer a fresh pull).
-Reuse the Lookup ID to read the saved roster without starting another crawl. Report the returned source and freshness dates; a recent lookup creation date does not establish that the attendee data is fresh.
+Reuse the Lookup ID to read the saved roster without starting another refresh. Report the returned source and freshness dates; a recent lookup creation date does not establish that the attendee data is fresh.
 
 ## Step B: Which deal score, and how many
 
@@ -41,7 +41,7 @@ Ask: "How many companies do you want back?" Default: the top 25.
 
 ## Step C: The attendee list
 
-Read an existing lookup with `{"request":{"operation":"attendees","lookup_id":"<id>"}}`. This does not start a crawl. For a requested new lookup, use operation `attendees` with both `event_id` and `edition_id` from search. Supply a UUID `request_id` and reuse it when retrying the same start.
+Read an existing lookup with `{"request":{"operation":"attendees","lookup_id":"<id>"}}`. This does not start a refresh. For a requested new lookup, use operation `attendees` with both `event_id` and `edition_id` from search. Supply a UUID `request_id` and reuse it when retrying the same start.
 
 Readable rows may coexist with running, partial or failed retrieval. Show the attendance and retrieval states, source and freshness. Never turn an error into an empty list. Re-read the same lookup to check progress. Use operation `refresh` with the saved `lookup_id`, `mode: "refresh"` or `mode: "retry"`, and a stable request ID when the user asks to refresh or retry.
 

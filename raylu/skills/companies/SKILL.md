@@ -107,23 +107,23 @@ Use the single `conferences` MCP tool for conference discovery, company attendan
 | `search` | Search or browse the full conference catalogue with filters, dates, sort, and paging. |
 | `locations`, `sectors` | Read valid catalogue filter values. |
 | `company_attendance` | Read the conferences a company attends by name, domain, or canonical ID. |
-| `refresh_company` | Discover or refresh company attendance through the provider workflow. |
+| `refresh_company` | Discover or refresh recorded company attendance. |
 | `attendees` | Read a saved lookup, or start one using the exact event and edition IDs from search. |
 | `submit` | Add a conference by source URL and available metadata, then read its lookup status. |
 | `saved` | List saved conference lookups in the current project or for the current user. |
 | `refresh` | Refresh a saved lookup or retry a failure with `mode: "refresh"` or `mode: "retry"`. |
 | `create_list`, `export` | Create a Raylu list or return complete CSV for a frozen attendee selection. |
 | `mark_seen` | Acknowledge the attendee snapshot the user has reviewed. |
-| `delete` | Remove the user's saved lookup, preserving shared attendance data. |
+| `delete` | Remove the user's saved lookup without removing the conference or its attendees from Raylu. |
 
 ### Read first, then act
 
-- Read company attendance with `{"request":{"operation":"company_attendance","company":"example.com"}}`. Resolve ambiguous companies before continuing. A read does not save the company or start provider work.
+- Read company attendance with `{"request":{"operation":"company_attendance","company":"example.com"}}`. Resolve ambiguous companies before continuing. A read does not save the company or start a refresh.
 - Search by conference name, topic, website, location, or filters. Use returned event and edition IDs together with a stable UUID `request_id` to start an attendee lookup. Reuse that UUID when retrying the same start. Reuse `lookup_id` for subsequent reads.
 - Report pending, partial, failed, and genuinely empty results distinctly. Include source dates and freshness. Attendance indicates recorded participation, not a guaranteed future appearance.
 - Continue paging when a complete result set is requested. Preserve `snapshot_revision` and `visit_token` from the same lookup and user. Do not acknowledge unseen rows.
 - For lists and exports, use the selection schema exactly. Choose all rows in a snapshot, explicit canonical company IDs, or matching filters with exclusions. Do not treat the displayed page as the full selection.
-- Starting an attendee lookup saves a personal conference lookup. Starting, refreshing, retrying, and submitting can start provider work and add resolved attendees to the project as companies. Submission also saves a personal conference. Reading an attendee page can add its returned companies to the project without starting a crawl. State these effects before acting. Use a stable request ID for retries of the same action.
+- Starting an attendee lookup saves a personal conference lookup. Starting, refreshing, retrying, and submitting can update attendance and add matched attendees to the project as companies. Submission also saves a personal conference. Reading an attendee page can add its returned companies to the project without starting a refresh. State these effects before acting. Use a stable request ID for retries of the same action.
 - Use `delete` only for the saved lookup the user explicitly requested removing; clarify its identity if ambiguous. For a requested list or export, execute the requested action without adding a separate approval step.
 - Export returns CSV content. If it exceeds the tool's limit, report the error and narrow the selection. Never present truncated CSV as complete or invent a download link.
 
