@@ -11,7 +11,7 @@ Requires the single `conferences` tool. If it is unavailable, report that this a
 
 Ask one question per message. Skip any question the user already answered. The time window (next 6 months) and location (no limit) have defaults: use them without asking and state them in the output.
 
-Reading conference data does not start provider work or save a company. Refreshing, submitting or starting a lookup can start provider work; report that effect and use stable request IDs. Do not invent a price or completion estimate.
+Catalogue and company-attendance reads do not start provider work or save a company. Starting an attendee lookup saves a personal lookup. Starting, refreshing, retrying, and submitting can start provider work and add resolved attendees to the project as companies. Submission also saves a personal conference. Reading an attendee page can add its returned companies to the project without starting a crawl. Report these effects and use stable request IDs. Do not invent a price or completion estimate.
 
 ## First question
 
@@ -67,7 +67,7 @@ Ask which lists or market maps (one or several), then how many top companies (de
 3. **Maps:** `get_list_or_map_rows(map: "<map>", columns: ["name", "domain", "score"])`. If the map is still building, the reply says so above the rows; tell the user the scores are not final. There is no server-side sort, so ask for those three columns only and sort yourself. Pages hold up to 500 rows: while the count line reads "page X of Y" with X below Y, ask for the next `page`.
 4. **Lists:** `get_list_or_map_rows(list: "<list>", columns: ["name", "domain"], page: n)` for names and domains, reading every page. If the list cannot be found, check with `search_lists_and_maps` that the connector is on the project that holds it before telling the user it is missing; a connector pointed at another project gives exactly this error. With a deal score: `score_companies(definition_id, domains: [...])`, at most 200 per call.
 5. **Taking the top N.** Leave out negative scores and "Disqualified" and say how many. If the cut falls inside a group of tied scores, take the whole tied group when that is 30 companies or fewer; otherwise ask the user how to narrow it. Scores from different deal scores or different maps are not comparable: with several maps, take the top few per map, never one sorted list.
-6. Continue with Path A steps 2 to 9. Company attendance reads and refreshes do not require a separate save.
+6. Continue with Path A steps 2 to 9. Company attendance reads and `refresh_company` do not require a separate company save. Attendee retrieval has the project-company effects described above.
 
 ## All paths end
 
