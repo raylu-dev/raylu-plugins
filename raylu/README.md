@@ -7,7 +7,7 @@ This plugin bundles the Raylu MCP connection plus a set of skills that drive Ray
 ## Skills
 
 - **start** — get oriented and confirm the Raylu connection.
-- **companies** — company lookup, firmographic search, investor portfolios, team analysis, meeting prep.
+- **companies** — company lookup, firmographic search, investor portfolios, team analysis, meeting prep, conference discovery and attendance.
 - **market-intelligence** — analyze a market map; add AI enrichment columns.
 - **sourcing** — set up a recurring sourcing routine.
 - **ma-mapping** — build a scored M&A map anchored on a target.
@@ -26,3 +26,5 @@ The plugin registers the Raylu MCP server (`https://mcp.raylu.ai/mcp`) automatic
 ## Editing the workflows
 
 Each skill is plain Markdown under `skills/<name>/SKILL.md`: a `description` (when Claude should use it) followed by step-by-step instructions. Copy, tweak, and reuse.
+
+Conference workflows use one `conferences` tool with operation-specific requests; no separate conference tools are required. Availability follows the connected account’s conference access.
