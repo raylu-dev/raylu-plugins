@@ -1,6 +1,6 @@
 ---
 name: companies
-description: Use when the user asks about a specific company, wants to find or search companies by criteria (headcount, location, funding stage, industry, keywords), look up an investor's portfolio, analyze a company's team, or prep for a meeting with a company. Treats Raylu as the source of truth for company data. Trigger phrases include 'tell me about <company>', 'find companies that...', 'who has <investor> backed', and 'prep me for my call with <company>'.
+description: Use when the user asks about a specific company, wants to find or search companies by criteria (headcount, location, funding stage, industry, keywords), look up an investor's portfolio, analyze a company's team, prep for a meeting with a company, find conferences and their attendees, or check which conferences a company attends. Treats Raylu as the source of truth for company data. Trigger phrases include 'tell me about <company>', 'find companies that...', 'who has <investor> backed', and 'prep me for my call with <company>'.
 ---
 
 # Raylu Companies
@@ -99,3 +99,34 @@ CRITICAL: Only use column names EXACTLY as listed in the table above. Do not inv
     { column: 'total_funding_amount', operator: 'gt', value: 0 }
   ]
 - Columns NOT available: naics_codes, sic_codes, description
+
+## Mode C: Conferences and company attendance
+
+Use the single `conferences` MCP tool for conference discovery, company attendance, attendee rosters, and conference actions. Its input is `{"request":{"operation":"...", ...}}`. Inspect the live tool schema for the fields accepted by each operation. Do not look for separate conference tools.
+
+| Operation | Purpose |
+|---|---|
+| `search` | Search or browse the full conference catalogue with filters, dates, sort, and paging. |
+| `locations`, `sectors` | Read valid catalogue filter values. |
+| `company_attendance` | Read the conferences a company attends by name, domain, or canonical ID. |
+| `refresh_company` | Discover or refresh company attendance through the provider workflow. |
+| `attendees` | Read a saved lookup, or start one using the exact event and edition IDs from search. |
+| `submit` | Add a conference by source URL and available metadata, then read its lookup status. |
+| `saved` | List saved conference lookups in the current project or for the current user. |
+| `refresh` | Refresh a saved lookup or retry a failure with `mode: "refresh"` or `mode: "retry"`. |
+| `create_list`, `export` | Create a Raylu list or return complete CSV for a frozen attendee selection. |
+| `mark_seen` | Acknowledge the attendee snapshot the user has reviewed. |
+| `delete` | Remove the user's saved lookup, preserving shared attendance data. |
+
+### Read first, then act
+
+- Read company attendance with `{"request":{"operation":"company_attendance","company":"example.com"}}`. Resolve ambiguous companies before continuing. A read does not save the company or start provider work.
+- Search by conference name, topic, website, location, or filters. Use returned event and edition IDs together to start an attendee lookup. Reuse `lookup_id` for subsequent reads.
+- Report pending, partial, failed, and genuinely empty results distinctly. Include source dates and freshness. Attendance indicates recorded participation, not a guaranteed future appearance.
+- Continue paging when a complete result set is requested. Preserve `snapshot_revision` and `visit_token` from the same lookup and user. Do not acknowledge unseen rows.
+- For lists and exports, use the selection schema exactly. Choose all rows in a snapshot, explicit canonical company IDs, or matching filters with exclusions. Do not treat the displayed page as the full selection.
+- Refresh, retry, and submission can start provider work. Use a stable request ID for retries of the same action. `attendees` requires a UUID when a request ID is supplied.
+- Use `delete` only for the saved lookup the user explicitly requested removing; clarify its identity if ambiguous. For a requested list or export, execute the requested action without adding a separate approval step.
+- Export returns CSV content. If it exceeds the tool's limit, report the error and narrow the selection. Never present truncated CSV as complete or invent a download link.
+
+If `conferences` is absent, report that conference access is unavailable for the connected account. Do not substitute general web knowledge for the user's Raylu data.

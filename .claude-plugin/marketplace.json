@@ -3,13 +3,13 @@
   "owner": {
     "name": "Raylu"
   },
-  "description": "Raylu's plugin marketplace — company intelligence, market mapping, sourcing, and outreach workflows for Claude.",
+  "description": "Raylu's plugin marketplace \u2014 company intelligence, market mapping, sourcing, and outreach workflows for Claude.",
   "plugins": [
     {
       "name": "raylu",
       "displayName": "Raylu",
       "source": "./raylu",
-      "description": "Company intelligence, market mapping, sourcing, and outreach — powered by Raylu's data and MCP tools."
+      "description": "Company intelligence, conferences, market mapping, sourcing, and outreach powered by Raylu data and MCP tools."
     }
   ]
 }

@@ -30,6 +30,7 @@ Confirm the Raylu MCP server is connected by checking that Raylu tools are avail
 Present the available workflows and what each one does:
 
 - **Companies** — look up a company, run a firmographic search, explore an investor's portfolio, analyze a team, or prep for a meeting.
+- **Conferences** — use the single `conferences` tool to find events, screen attendees, and read company attendance.
 - **Market Intelligence** — analyze a market map and add AI enrichment columns on the fly.
 - **Sourcing** — set up a recurring routine that discovers and reaches out to new companies on a schedule.
 - **M&A Mapping** — build a scored, AI-enriched M&A map anchored on an acquisition target.

@@ -29,7 +29,7 @@ The marketplace hosts one plugin, **Raylu**, which bundles:
 
 | Skill | What it does |
 |-------|--------------|
-| Companies | Company lookup, firmographic search, investor portfolios, team analysis, meeting prep |
+| Companies | Company lookup, firmographic search, investor portfolios, team analysis, meeting prep, conferences and attendance |
 | Market Intelligence | Analyze a market map; add AI enrichment columns |
 | Sourcing | Stand up a recurring, automated sourcing routine |
 | M&A Mapping | Build a scored M&A map anchored on an acquisition target |
