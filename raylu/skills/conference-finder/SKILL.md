@@ -11,7 +11,7 @@ Requires the single `conferences` tool. If it is unavailable, report that this a
 
 Ask one question per message. Skip any question the user already answered. The time window (next 6 months) and location (no limit) have defaults: use them without asking and state them in the output.
 
-Reading conference data does not start provider work or save a company. Refreshing, submitting or starting a lookup can start provider work; report that effect and use stable request IDs. Do not invent a price or completion estimate.
+Catalogue and company-attendance reads do not start a refresh or save a company. Starting an attendee lookup saves a personal lookup. Starting, refreshing, retrying, and submitting can update attendance and add matched attendees to the project as companies. Submission also saves a personal conference. Reading an attendee page can add its returned companies to the project without starting a refresh. Report these effects and use stable request IDs. Do not invent a price or completion estimate.
 
 ## First question
 
@@ -27,14 +27,14 @@ Ask which companies (a few; about 20 is the working limit).
 
 **If the user says "X or similar companies"**: build a peer set first. `get_companies` on the named company for its keywords, size and location, then `firmographic_search` on those keywords with a headcount band. The results are noisy (schools, charities, wrong-country records, inflated headcounts), so pick by hand and show the proposed set, grouped, for the user to edit before anything is saved.
 
-1. `get_companies(queries: [...])`, at most 50 per call. Compare the returned count with what you asked for and read each company's own error block. A `[Preview]` tag, a pending or warehouse-only record, or an ambiguous match is not a saved company.
+1. `get_companies(queries: [...])`, at most 50 per call. Compare the returned count with what you asked for and read each company's own error block. A `[Preview]` tag, a pending or unsaved record, or an ambiguous match is not a saved company.
 2. **Which website to use.** If the company came from a list or map, use the website the list or map stores for it, not the one the user typed, and say so when they differ (a company can be filed under a parent's or merger partner's site).
 3. **Ambiguous matches.** When a tool answers "closest matches", do not drop the company. If one candidate's website is exactly the root domain asked for, use its ID. Otherwise show the candidates and ask once.
-4. Use operation `company_attendance` with the company domain or canonical ID. Keep source and freshness information. A never-fetched or partial history does not mean the company attends nothing. Distinguish provider failure from genuinely empty data.
-5. For requested discovery or refresh, use operation `refresh_company` with the same company and a stable `request_id`. It can start provider work without saving a warehouse company into the project. Read the history again to check published results.
+4. Use operation `company_attendance` with the company domain or canonical ID. Keep source and freshness information. A never-fetched or partial history does not mean the company attends nothing. Distinguish an unsuccessful refresh from genuinely empty data.
+5. For requested discovery or refresh, use operation `refresh_company` with the same company and a stable `request_id`. It can update attendance without saving the company to the project. Read the history again to check the results.
 6. Build a grid of upcoming conferences by company, using dates rather than an assumption that historical attendance guarantees future attendance. Rank by how many target companies have evidence. Label predictions separately from recorded participation.
 7. Confirm promising editions with operation `search`, then `saved` and `attendees`. Reuse exact event and edition IDs. Roster rows include company roles and can be searched and filtered. Preserve `snapshot_revision` and `visit_token` across pages and state coverage.
-8. A requested new attendee lookup uses `attendees` with both event and edition IDs, plus a UUID `request_id`. Reuse that UUID for retries of the same start. Existing `lookup_id` reads do not start a crawl. Partial rows can be useful while retrieval continues.
+8. A requested new attendee lookup uses `attendees` with both event and edition IDs, plus a UUID `request_id`. Reuse that UUID for retries of the same start. Existing `lookup_id` reads do not start a refresh. Partial rows can be useful while retrieval continues.
 9. If Raylu has no evidence, say so. External research is optional supplementary evidence and must carry its source and date. Never label an external inference as confirmed Raylu attendance.
 
 ## Path B: sector, place and time
@@ -56,7 +56,7 @@ Ask, one at a time: the sector or thesis in two sentences; the countries (a city
 7. **Rank** on exhibitor count, date and city. Attendance and exhibitor figures are catalogue estimates: label them so, do not rank on a figure that is out of line with the event type or venue (a hotel roundtable listed at 20,000), and flag a venue that contradicts the location. A blank cell is unknown, not zero.
 8. Use the returned official and source URLs to check the top 5 when external verification is useful. If a big recurring event's next edition is missing from the catalogue, say "next edition not listed yet" and give the expected dates from the web as unverified.
 
-If the tool reports the provider unavailable, the results are saved catalogue entries only. Say so; it is not a short list of conferences.
+If the tool reports a service unavailable, explain which results remain available. Do not present limited results as a complete list of conferences.
 
 ## Path C: top-scored companies from lists or maps
 
@@ -67,7 +67,7 @@ Ask which lists or market maps (one or several), then how many top companies (de
 3. **Maps:** `get_list_or_map_rows(map: "<map>", columns: ["name", "domain", "score"])`. If the map is still building, the reply says so above the rows; tell the user the scores are not final. There is no server-side sort, so ask for those three columns only and sort yourself. Pages hold up to 500 rows: while the count line reads "page X of Y" with X below Y, ask for the next `page`.
 4. **Lists:** `get_list_or_map_rows(list: "<list>", columns: ["name", "domain"], page: n)` for names and domains, reading every page. If the list cannot be found, check with `search_lists_and_maps` that the connector is on the project that holds it before telling the user it is missing; a connector pointed at another project gives exactly this error. With a deal score: `score_companies(definition_id, domains: [...])`, at most 200 per call.
 5. **Taking the top N.** Leave out negative scores and "Disqualified" and say how many. If the cut falls inside a group of tied scores, take the whole tied group when that is 30 companies or fewer; otherwise ask the user how to narrow it. Scores from different deal scores or different maps are not comparable: with several maps, take the top few per map, never one sorted list.
-6. Continue with Path A steps 2 to 9. Company attendance reads and refreshes do not require a separate save.
+6. Continue with Path A steps 2 to 9. Company attendance reads and `refresh_company` do not require a separate company save. Attendee retrieval has the project-company effects described above.
 
 ## All paths end
 
@@ -80,7 +80,7 @@ Deliver with the output contract. Then offer a list of dates to hold on the cale
 3. Paths A and C only, when few or no conferences reach the cut: a second table, "Fits the sector, no company evidence yet", of catalogue events found by search. Label it plainly; it says nothing about who attends.
 4. One recommendation, with the reason in one sentence. If the evidence is too thin to choose, say that and say what would firm it up.
 5. For Paths A and C: the companies whose history was never fetched or that are not saved, and whether a requested refresh is still running or needs retry.
-6. The limits below that apply to this answer, and provider actions started this run.
+6. The limits below that apply to this answer, and attendance updates started this run.
 7. The offer: calendar dates, or conference-screen.
 
 Everything in the tables comes from a Raylu tool result, except rows labelled unverified from the web. No conference is placed in a table from memory.
@@ -91,13 +91,13 @@ Everything in the tables comes from a Raylu tool result, except rows labelled un
 - Never-fetched, partial, failed and empty histories are different states. Company matching can miss aliases or regional sites.
 - Size figures may be estimates. A missing count is unknown rather than zero.
 - Use operation `submit` with a source URL and available metadata when the user asks to add an unlisted conference. Do not promise a fixed turnaround time.
-- Use `refresh` for a saved lookup, `mark_seen` for a reviewed snapshot and `delete` only for a saved lookup the user explicitly requested removing. Deletion retains shared attendance data.
+- Use `refresh` for a saved lookup, `mark_seen` for a reviewed snapshot and `delete` only for a saved lookup the user explicitly requested removing. Deletion does not remove the conference or its attendees from Raylu.
 
 ## Common mistakes
 
 - Sorting scores from different deal scores or maps into one list.
 - Reading "never fetched" or "not saved" as "attends nothing".
-- Starting unrequested provider work, or silently saving a company just to read attendance.
+- Starting unrequested attendance updates, or silently saving a company just to read attendance.
 - Mapping a thesis onto sectors without showing the mapping, or using a sector label the tool does not list.
 - Treating an empty keyword search as "no such conference" after one wording.
 - Paging a 600-result search instead of narrowing it, or not saying how much was left unread.
@@ -105,5 +105,5 @@ Everything in the tables comes from a Raylu tool result, except rows labelled un
 - Leaving ended events, happy hours and duplicates in the results.
 - Dropping a company because the tool returned "closest matches".
 - Looking a list member up by the website the user typed when the list stores a different one.
-- Treating a provider outage as a short list.
+- Treating a failed attendance update as a short list.
 - Placing a conference in the table from general knowledge.
