@@ -44,7 +44,7 @@ Ask one question per message. Skip any the user already answered. If everything 
    - **My CRM**: every account in your firm's CRM that has an owner, across the whole firm, not only yours.
    - **All CRM Companies**: every company in your firm's CRM.
    - **CRM Companies**: the accounts you own in the CRM.
-   - **My Touched Companies**: accounts where you logged a touch in the CRM in the last 5 years (at TA: a Note, Pass Lead or Interest activity; calls and visits logged as meetings do not count).
+   - **My Touched Companies**: accounts where you logged a touch in the CRM in the last 5 years.
    - **Team CRM Companies**: accounts owned by the people on your team, as set up by Raylu.
    - Any other name on a CRM list: "a list synced from your CRM". Do not guess what it contains.
 
